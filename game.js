@@ -106,6 +106,17 @@ const restartBtn = document.getElementById('restart-btn');
 const abilityOverlay = document.getElementById('ability-overlay');
 const themeBtn = document.getElementById('theme-toggle');
 
+const pauseOverlay = document.getElementById('pause-overlay');
+const pauseControls = document.getElementById('pause-controls');
+const startLevelSelect = document.getElementById('start-level-select');
+const START_LEVEL_KEY = 'tetris-start-level';
+const MAX_START_LEVEL = 15;
+let startLevel = 1;
+try {
+  const sl = parseInt(localStorage.getItem(START_LEVEL_KEY), 10);
+  if (sl >= 1 && sl <= MAX_START_LEVEL) startLevel = sl;
+} catch (e) { /* ignorar */ }
+
 const THEME_KEY = 'tetris-theme';
 let theme = 'dark';
 let gridColor = '#22222e';
@@ -803,15 +814,16 @@ function togglePause() {
   if (gameOver || abilityMenu) return;
   paused = !paused;
   if (!paused) {
-    overlay.classList.add('hidden');
+    pauseOverlay.classList.add('hidden');
+    pauseControls.classList.add('hidden');
+    if (document.activeElement) document.activeElement.blur();
     lastTime = performance.now();
+    cancelAnimationFrame(animId);
     loop(lastTime);
   } else {
     cancelAnimationFrame(animId);
-    overlayTitle.textContent = 'PAUSA';
-    overlayTitle.classList.remove('win');
-    overlayScore.textContent = '';
-    overlay.classList.remove('hidden');
+    startLevelSelect.value = String(startLevel);
+    pauseOverlay.classList.remove('hidden');
   }
 }
 
@@ -862,7 +874,7 @@ function init() {
   board = createBoard();
   score = 0;
   lines = 0;
-  baseLevel = challenge && challenge.startLevel ? challenge.startLevel : 1;
+  baseLevel = challenge && challenge.startLevel ? challenge.startLevel : startLevel;
   level = baseLevel;
   paused = false;
   gameOver = false;
@@ -892,6 +904,8 @@ function init() {
   drawHold();
   overlay.classList.add('hidden');
   abilityOverlay.classList.add('hidden');
+  pauseOverlay.classList.add('hidden');
+  pauseControls.classList.add('hidden');
   cancelAnimationFrame(animId);
   animId = requestAnimationFrame(loop);
 }
@@ -913,7 +927,11 @@ document.addEventListener('keydown', e => {
     if (current) { announce(muted ? 'SONIDO OFF' : 'SONIDO ON', '#b0bec5'); if (paused || gameOver) draw(); }
     return;
   }
-  if (e.code === 'KeyP') { togglePause(); return; }
+  if (e.code === 'KeyP' || e.code === 'Escape') {
+    if (e.target && e.target.tagName === 'SELECT' && e.code === 'Escape') { e.target.blur(); return; }
+    if (!e.repeat) togglePause();
+    return;
+  }
   if (paused || gameOver) return;
   switch (e.code) {
     case 'ArrowLeft':
@@ -946,6 +964,28 @@ document.addEventListener('keydown', e => {
 });
 
 restartBtn.addEventListener('click', init);
+
+for (let i = 1; i <= MAX_START_LEVEL; i++) {
+  const opt = document.createElement('option');
+  opt.value = String(i);
+  opt.textContent = String(i);
+  startLevelSelect.appendChild(opt);
+}
+startLevelSelect.value = String(startLevel);
+startLevelSelect.addEventListener('change', () => {
+  startLevel = Math.min(MAX_START_LEVEL, Math.max(1, parseInt(startLevelSelect.value, 10) || 1));
+  try { localStorage.setItem(START_LEVEL_KEY, String(startLevel)); } catch (e) { /* almacenamiento no disponible */ }
+  startLevelSelect.blur();
+});
+document.getElementById('pause-resume').addEventListener('click', togglePause);
+document.getElementById('pause-restart').addEventListener('click', () => {
+  if (document.activeElement) document.activeElement.blur();
+  init();
+});
+document.getElementById('pause-controls-btn').addEventListener('click', e => {
+  pauseControls.classList.toggle('hidden');
+  e.currentTarget.blur();
+});
 
 modeSelect.addEventListener('change', () => {
   modeSelect.blur();
