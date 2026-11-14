@@ -818,6 +818,7 @@ function togglePause() {
     pauseControls.classList.add('hidden');
     if (document.activeElement) document.activeElement.blur();
     lastTime = performance.now();
+    cancelAnimationFrame(animId);
     loop(lastTime);
   } else {
     cancelAnimationFrame(animId);
@@ -927,6 +928,7 @@ document.addEventListener('keydown', e => {
     return;
   }
   if (e.code === 'KeyP' || e.code === 'Escape') {
+    if (e.target && e.target.tagName === 'SELECT' && e.code === 'Escape') { e.target.blur(); return; }
     if (!e.repeat) togglePause();
     return;
   }
