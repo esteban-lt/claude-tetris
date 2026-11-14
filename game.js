@@ -1276,7 +1276,6 @@ function applyTheme(t) {
   document.documentElement.dataset.theme = theme;
   const isLight = theme === 'light';
   themeBtn.setAttribute('aria-pressed', String(isLight));
-  themeBtn.textContent = isLight ? '🌙 Modo oscuro' : '☀️ Modo claro';
   gridColor = isLight ? '#e3e6ee' : '#22222e';
   try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* almacenamiento no disponible */ }
   // refrescar canvas aunque el juego esté en pausa o terminado
