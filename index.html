@@ -7,12 +7,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 class="title">TETRIS</h1>
-  <button id="theme-toggle" type="button" tabindex="-1" aria-pressed="false">☀️ Modo claro</button>
   <div class="wrapper">
     <div class="game-container">
 
       <aside class="panel panel-left">
+        <h1 class="title">TETRIS</h1>
         <div class="panel-section">
           <span class="label">HOLD</span>
           <canvas id="hold-canvas" width="120" height="120"></canvas>
@@ -54,6 +53,10 @@
             <option value="pastel">Pastel</option>
             <option value="pixel">Pixel art</option>
           </select>
+          <button id="theme-toggle" type="button" tabindex="-1" aria-pressed="false" aria-label="Cambiar tema">
+            <span class="opt opt-dark">OSCURO</span>
+            <span class="opt opt-light">CLARO</span>
+          </button>
         </div>
 
         <div id="look-section" class="panel-section hidden">
