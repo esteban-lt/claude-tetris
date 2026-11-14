@@ -24,5 +24,6 @@ Three files: `index.html` (DOM + two canvases), `style.css`, and `game.js` (all 
 - `lockPiece()` also owns scoring: combo multiplier, T-spin, back-to-back, perfect clear, energy, level/speed (level = baseLevel + lines/10; `dropInterval = max(100, 1000 - (level-1)*90)`), power-up/reward insertion and challenge goal check. It calls `saveUndo()` first (used by the "undo" ability).
 - Challenge modes are configured in `CHALLENGES` and selected via `#mode-select`; the ability menu (`E`) pauses the loop like `togglePause()` does, and resumes by resetting `lastTime`.
 - Extra canvases: `hold-canvas` (120x120) and `look-canvas` (120x200, only shown while the "next 5" ability is active); all previews use `drawMini()`.
+- Pause (`P`/`Escape`) uses its own `#pause-overlay` (resume, restart, controls list, initial-level select), not the shared `#overlay` (game over/win only). `startLevel` (persisted in localStorage `tetris-start-level`, 1-15) feeds `baseLevel` in `init()` unless a challenge defines its own `startLevel`. Game keys are ignored while `paused`.
 - Input is a single `keydown` handler at the bottom of `game.js` (uses `e.code`).
 - Canvas pixel size is hard-coded in `index.html` (`300x600` board, `120x120` next preview); if `COLS`, `ROWS` or `BLOCK` change in `game.js`, update the canvas `width`/`height` to match.

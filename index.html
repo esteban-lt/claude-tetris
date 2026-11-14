@@ -97,6 +97,28 @@
       </div>
     </div>
 
+    <div id="pause-overlay" class="overlay hidden">
+      <div class="overlay-box ability-box">
+        <p class="ability-title">PAUSA</p>
+        <button type="button" id="pause-resume" tabindex="-1">Reanudar (P / Esc)</button>
+        <button type="button" id="pause-restart" tabindex="-1">Reiniciar</button>
+        <button type="button" id="pause-controls-btn" tabindex="-1">Ver controles</button>
+        <ul id="pause-controls" class="pause-controls hidden">
+          <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+          <li><kbd>↑</kbd> / <kbd>X</kbd> rotar</li>
+          <li><kbd>↓</kbd> bajar</li>
+          <li><kbd>Space</kbd> caída</li>
+          <li><kbd>C</kbd><kbd>Shift</kbd> hold</li>
+          <li><kbd>E</kbd> habilidades</li>
+          <li><kbd>M</kbd> sonido</li>
+          <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
+        </ul>
+        <label class="pause-level">Nivel inicial
+          <select id="start-level-select" tabindex="-1"></select>
+        </label>
+      </div>
+    </div>
+
     <div id="ability-overlay" class="overlay hidden">
       <div class="overlay-box ability-box">
         <p class="ability-title">ELIGE UNA HABILIDAD</p>
