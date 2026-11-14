@@ -271,7 +271,8 @@ kbd {
   50% { box-shadow: 0 0 10px rgba(128, 222, 234, 0.9); }
 }
 
-#mode-select {
+#mode-select,
+#skin-select {
   width: 100%;
   background: var(--kbd-bg);
   color: var(--text);
