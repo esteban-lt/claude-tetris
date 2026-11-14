@@ -85,6 +85,7 @@ Después abre `http://localhost:8000` en el navegador.
 | `↓`       | Soft drop (bajar más rápido)      |
 | `Espacio` | Hard drop (caída instantánea)     |
 | `P` / `Esc` | Menú de pausa (reanudar, reiniciar, ver controles, nivel inicial) |
+| `Enter`   | Empezar partida (pantalla de inicio) |
 
 ---
 
@@ -117,6 +118,7 @@ Contiene toda la lógica del juego. A grandes rasgos:
 - **Puntuación**: usa la tabla clásica `[0, 100, 300, 500, 800]` multiplicada por el nivel actual; el hard drop suma 2 puntos por celda recorrida y el soft drop 1 punto por fila.
 - **Nivel y velocidad**: el nivel sube cada 10 líneas; la velocidad de caída se calcula como `max(100, 1000 − (level − 1) × 90)` milisegundos.
 - **Ghost piece** (`ghostY`): proyecta la posición final de la pieza actual hacia abajo y la dibuja con `globalAlpha = 0.2`.
+- **Tabla de records local** (`loadRecords`, `saveEntry`, `renderRecords`): guarda en `localStorage` (clave `tetris-records`) el Top 5 con nombre del jugador, el mejor combo y las líneas máximas. Se muestra en la pantalla de inicio y en el game over (donde, si la puntuación entra en el top, aparece un campo para el nombre). El botón «Borrar records» pide confirmación en dos pasos.
 
 ### Flujo del juego
 

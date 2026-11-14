@@ -93,6 +93,17 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="records-extra" class="records-extra hidden">
+          <form id="name-form" class="name-form hidden" autocomplete="off">
+            <p id="name-msg" class="name-msg"></p>
+            <div class="name-row">
+              <input id="name-input" type="text" maxlength="12" placeholder="Tu nombre" aria-label="Tu nombre" />
+              <button id="name-save" type="submit" tabindex="-1">Guardar</button>
+            </div>
+          </form>
+          <div id="over-records" class="records"></div>
+          <button id="over-reset-btn" type="button" tabindex="-1" class="reset-btn">Borrar records</button>
+        </div>
         <button id="restart-btn">Reiniciar</button>
       </div>
     </div>
@@ -116,6 +127,15 @@
         <label class="pause-level">Nivel inicial (próxima partida)
           <select id="start-level-select" tabindex="-1"></select>
         </label>
+      </div>
+    </div>
+
+    <div id="start-overlay" class="overlay">
+      <div class="overlay-box">
+        <p class="start-title">MEJORES PUNTUACIONES</p>
+        <div id="start-records" class="records"></div>
+        <button id="play-btn" type="button" tabindex="-1">Jugar (Enter)</button>
+        <button id="start-reset-btn" type="button" tabindex="-1" class="reset-btn">Borrar records</button>
       </div>
     </div>
 
